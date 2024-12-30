@@ -1,9 +1,7 @@
 /* Structure */
-table {
-    width: 100%;
-  }
-  
-  .mat-mdc-form-field {
-    font-size: 14px;
-    width: 100%;
-  }
+
+/* .matInput {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+} */
