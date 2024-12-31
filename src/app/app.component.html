@@ -6,47 +6,69 @@
     </p>
     </header>
   <main>
-    <div class="flex space-x-4 ">
+    <div class="flex space-x-6 ">
       <!-- First Aside Section -->
-      <aside class= "bg-white-100 p-4 rounded flex flex-col items-center space-y-2 " style="flex-basis: 45%">
-        <img class="object-cover object-center rounded items-center mx-auto flex" alt="hero" width="300" height="250" src="assets/login.jpg">
-        <h2 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-center text-gray-900">Sign In</h2>
+      <section class= "bg-white-100 p-4 rounded flex flex-col items-center space-y-2 " style="flex-basis: 45%">
+        <figure>
+          <img class="object-cover object-center rounded items-center mx-auto flex" alt="hero" width="300" height="250" src="assets/login.jpg">
+        </figure>
+        
+        <h2 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-center text-gray-900">Sign-In</h2>
         <mat-form-field appearance="outline" class="w-full max-w-xs focus-within:border-orange-700">
           <input matInput placeholder="Enter Pin" class="border-2 border-orange-500 focus-within:border-orange-700">
         </mat-form-field>
       
         <button mat-flat-button class="w-full max-w-xs text-white bg-orange-500 border-0 py-2 px-3 rounded focus:outline-none hover:bg-orange-600 text-lg">Submit</button>
-        <p class="text-sm mt-2 text-gray-500 text-center ">
-          <a class="underline text-orange-500 hover:text-orange-700" href="">Click Here</a> if you are accessing this tool for the first time.
-        </p>
-      </aside>
+       
+      </section>
     
       <!-- Second Aside Section -->
-      <aside class="bg-white-100 p-4 rounded" style="flex-basis: 75%">
+      <section class="bg-white-100 p-4 rounded" style="flex-basis: 75%">
         <h2 class="mb-8 leading-relaxed">About</h2>
         <p class="mb-8 leading-relaxed"> Owners Management Hub provides a secure and user-friendly access point for authorized users to log into the system. Designed with simplicity and security in mind, this page ensures that only authorized personnel can access sensitive owner management data.</p>
         <hr class="mb-4">
         <h3> Important Reminder</h3>
-        <ol class="list-decimal pl-5">
+        <ol class="list-decimal pl-5 mb-4">
             <li><strong>No Internet Needed:</strong> Works offline, no connectivity required.</li>
             <li><strong>Remote Work:</strong> Ideal for use in remote locations.</li>
             <li><strong>Secure Environments:</strong> Ensures data security without internet access.</li>
             <li><strong>Security Lockout:</strong>  After failed attempts, tool may lock out.</li>
         </ol>
-      </aside>
+        <hr class="mb-4">
+        <h3> New User?</h3>
+        <p class="text-sm mt-2 text-gray-500">
+          <a class="underline text-orange-500 hover:text-orange-700 mt-16" href="">Click Here</a> if you are accessing this tool for the first time.
+        </p>
+      </section>
       <hr>
-      
     </div>
   </main>
-  <footer class=" flex space-x-4  bg-gray-300 p-4 flex flex-col ">
-    <section class="body-font space-x-2" style="flex-basis: 75%">
-      <h2 class="text-gray-900 font-medium title-font tracking-wider text-xl ">Contact Us</h2>
-      <p class="text-gray-500">Phone: (123) 456-7890</p>
 
-      <h2 class="text-gray-900 font-medium title-font tracking-wider text-xl">Email</h2>
-      <p class="text-gray-500">Email: support7#64;example.com</p>
-      <h2 class="text-gray-900 font-medium title-font tracking-wider text-xl">User Manual</h2>
-      <a href="/path/to/user-manual.pdf" class="text-indigo-500 hover:text-indigo-700">Download User Manual</a>
-    </section>
+  <hr class="mb-4">
+ 
+  
+  <footer class=" bg-gray-100 flex-col mt-16">
+        <!-- Item 1 -->
+        <div class="flex-col text-center items-center p-8">
+          <h3 class="text-gray-900 font-medium">Contact Us</h3>
+          <p class="leading-relaxed text-base">
+            <a href="tel:+1234567890" class="underline text-orange-500 hover:text-orange-700">Phone: (123) 456-7890</a>
+          </p>
+        </div>
+        <!-- Item 2 -->
+        <div class="flex-col text-center items-center mb-4">
+          <h3 class="text-gray-900 font-medium">Email</h3>
+          <p class="leading-relaxed text-base">
+            <a href="tel:+1234567890" class="underline text-orange-500 hover:text-orange-700">Email: support&#64;example.com</a>
+          </p>
+        </div>
+  
+        <!--Item 3 -->
+        <div class="flex-col text-center items-center">
+          <h3 class="text-gray-900 font-medium">User Manual</h3>
+          <p class="leading-relaxed text-base">
+            <a href="tel:+1234567890" class="underline text-orange-500 hover:text-orange-700">Download User Manual</a>
+          </p>
+        </div>
   </footer>
 </body>
