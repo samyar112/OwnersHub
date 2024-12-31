@@ -1,1 +1,26 @@
-<p>login works!</p>
+    <main class="bg-gray-100">
+      <div class="flex space-x-6 ">
+        <!-- First Aside Section -->
+        <section class= "bg-white-100 p-4 flex flex-col items-center space-y-2 " style="flex-basis: 45%">
+          <figure>
+            <img class="object-cover object-center rounded-full items-center mx-auto flex" alt="hero" width="300" height="250" src="assets/login.jpg">
+          </figure>
+          
+          <h2 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-center text-gray-900">Sign-In</h2>
+          <mat-form-field appearance="outline" class="w-full max-w-xs">
+            <input matInput placeholder="Enter Pin">
+          </mat-form-field>
+        
+          <button mat-flat-button class="w-full max-w-xs text-white bg-orange-500 border-0 py-2 px-3 rounded focus:outline-none hover:bg-orange-600 text-lg">Submit</button>
+         
+        </section>
+        <!-- Second Aside Section -->
+       <app-new-user></app-new-user>
+        <hr>
+      </div>
+    </main>  
+    <!-- Footer -->
+    <app-footer></app-footer>
+  
+
+  
