@@ -18,8 +18,6 @@ import { ErrorMessages } from '../../../public/error-messages.enum';
   styleUrl: './login.component.css'
 })
 
-
-
 export class LoginComponent {
   pin: string = '';
   failedAttempts: number = 0;
@@ -36,41 +34,27 @@ export class LoginComponent {
    onSubmit(pinField: any) {
     pinField.control.markAsTouched();
 
-    if (this.failedAttempts >= this.maxAttempts) {
-      this.handleTooManyAttempts();
-      pinField.control.markAsUntouched();
-      return;
-    }
-
     if (this.pin === this.expectedPin) {
       this.router.navigate(['/home']);  // Navigate to the home page
     } else {
       this.handleIncorrectPin();
-      this.failedAttempts++;
-      this.remainingAttempts = this.maxAttempts - this.failedAttempts;
-      
     }
   }
 
   // Handle incorrect pin error and update the error message
   private handleIncorrectPin() {
     this.isPinInvalid = true;
+    this.failedAttempts++;
+      this.remainingAttempts = this.maxAttempts - this.failedAttempts;
     
-    if (this.failedAttempts < this.maxAttempts) {
+    if (this.failedAttempts <= this.maxAttempts) {
       this.errorMessage = `${ErrorMessages.IncorrectPin} ${this.remainingAttempts}`;
       this.pin = '';
-    }
-  }
-
-  // Handle the case of too many failed attempts
-  private handleTooManyAttempts() {
-    this.isPinInvalid = false;
-    this.pin = '';
-    this.errorMessage = ErrorMessages.TooManyAttempts;
-    this.isButtonDisabled = true; 
-    
-    
-
+    } else {
+      this.isButtonDisabled = true;
+      this.pin = '';
+      this.errorMessage = ErrorMessages.TooManyAttempts;
+    // Handle the case of too many failed attempts  
     setTimeout(() => {
       this.failedAttempts = 0;  
       this.remainingAttempts = this.maxAttempts;
@@ -78,6 +62,7 @@ export class LoginComponent {
       this.errorMessage = ''
       this.pin = ''; 
     }, 10000);  // Timeout for 10 seconds
+    }
   }
 }
 
