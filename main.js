@@ -1,19 +1,29 @@
 const { ipcMain } = require('electron');
-const { app, BrowserWindow } = require('electron/main')
-const path = require('node:path')
+const { app, BrowserWindow } = require('electron/main');
+const path = require('node:path');
+const sqlite3 = require('sqlite3').verbose();
 
 //Error Handling
 process.on('uncaughtException', (error) => {
     console.error("Unexpected error: ", error);
 })
 
+// Sqlite3 connection
+const db = new sqlite3.Database(path.join(__dirname, 'test.db'), (err) => {
+  if (err) {
+    console.error('Database connection failed:', err);
+  } else {
+    console.log('Database connected!');
+  }
+});
+
 function createWindow () {
   const win = new BrowserWindow({
     width: 1200,
-    height:1000,
+    height:850,
     resizable: true,
     minWidth: 800,
-    minHeight: 600,
+    minHeight: 800,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
