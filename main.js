@@ -20,7 +20,7 @@ const db = new sqlite3.Database(path.join(__dirname, 'test.db'), (err) => {
 function createWindow () {
   const win = new BrowserWindow({
     width: 1200,
-    height:850,
+    height:900,
     resizable: true,
     minWidth: 800,
     minHeight: 800,
