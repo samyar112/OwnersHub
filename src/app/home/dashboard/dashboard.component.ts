@@ -3,6 +3,9 @@ import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MenuComponent } from "./menu/menu.component";
+import { PaginatorComponent } from "./paginator/paginator.component";
 
 export interface PeriodicElement {
   name: string;
@@ -28,7 +31,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatIconModule],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatIconModule, MatButtonModule, MenuComponent, PaginatorComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
