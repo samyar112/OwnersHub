@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
-import { ErrorMessages } from '../../../public/error-messages.enum';
+import { ErrorMessages } from '../../error-messages.enum';
 import { FooterComponent } from './footer/footer.component';
 import { NewUserComponent } from './new-user/new-user.component';
 

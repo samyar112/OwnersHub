@@ -1,54 +1,19 @@
-<p>home works!</p>
-
-  
-  <section>
-    <mat-form-field>
-      <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
-    </mat-form-field>
-    <div class="border-spacing-[7px] ...">
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-  
-        <!-- Position Column -->
-        <ng-container matColumnDef="position">
-          <th mat-header-cell *matHeaderCellDef> No. </th>
-          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-        </ng-container>
+  <header>
+    <p class="text-white font-medium bg-gradient-to-r from-[#1e3a8a] to-[#14b8a6] p-2">
+      Owners Management
+    </p>
+  </header>
+    <main>
+    <!-- <main class="flex h-[680px]"> -->
+      <div class="flex flex-row space-x-10 mt-2 mb-10 mr-10">
+          <app-side-nav></app-side-nav>
+        <section>
+          <app-dashboard></app-dashboard>
+        </section>
+      </div>
+     
       
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-        </ng-container>
-      
-        <!-- Weight Column -->
-        <ng-container matColumnDef="weight">
-          <th mat-header-cell *matHeaderCellDef> Weight </th>
-          <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-        </ng-container>
-      
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="symbol">
-          <th mat-header-cell *matHeaderCellDef> Symbol </th>
-          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-        </ng-container>
-      
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      
-        <!-- Star Column -->
-        <ng-container matColumnDef="star" stickyEnd>
-          <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
-          <td mat-cell *matCellDef="let element">
-            <mat-icon>more_vert</mat-icon>
-          </td>
-        </ng-container>
-      
-        <!-- Row shown when there is no matching data. -->
-        <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" colspan="4">No data found"</td>
-        </tr>
-      </table>
-    </div>
-  </section>
-  
+    </main>
+   
+    
+    

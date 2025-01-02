@@ -5,7 +5,7 @@ import { DetailsComponent } from './home/details/details.component';
 
 
 export const routes: Routes = [
-    {'path': '', component:LoginComponent},
-    {'path': 'home', component:HomeComponent},
+    {'path': '', component:HomeComponent},
+    {'path': 'login', component:LoginComponent},
     {'path': 'details', component:DetailsComponent},
 ];
