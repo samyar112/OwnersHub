@@ -4,11 +4,14 @@ import {FormControl, Validators, FormGroup, ReactiveFormsModule} from '@angular/
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { RouterLink} from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
+
 
 @Component({
   selector: 'app-details',
   standalone: true,
-  imports: [MatButtonModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, CommonModule],
+  imports: [RouterLink, MatButtonModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, CommonModule, MatIcon],
   templateUrl: './details.component.html',
   styleUrl: './details.component.css'
 })
@@ -31,14 +34,10 @@ export class DetailsComponent {
   }
     
   onSubmit() {
-    const isFormValid = this.userForm.valid;
-    debugger;
     this.isFormSubmitted = true;
-  }
-
-  onCancel(): void {
-    this.isFormSubmitted = false;  // Reset form submission state
-    this.userForm.reset();  // Reset the form
+    if (this.userForm.valid) {
+      // Logic here to save it in the database
+    }
   }
 }
 

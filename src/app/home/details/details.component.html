@@ -1,90 +1,86 @@
+<header>
+  <p class="text-white font-medium bg-gradient-to-r from-[#1e3a8a] to-[#14b8a6] p-2">
+    Owners Management
+  </p>
+</header>
+
+<div class="pl-4 flex space-x-4">
+  <button mat-fab routerLink="/home" style="background-color: whitesmoke; color: #2c3e8f;">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <h3 style="font-size: x-large;"> New Owner Profile</h3>
+</div>
+
 
 <form [formGroup]="userForm" class="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-lg">
     <!-- Account Number  -->
-    <mat-form-field appearance="outline">
-        <mat-label>Account#</mat-label>
-        <input matInput required formControlName="account" maxlength="4"  
-        value="">
-        <div *ngIf="userForm.controls['account'].invalid && (isFormSubmitted || userForm.controls['account'].touched || userForm.controls['account'].dirty)">
-        </div>
-    </mat-form-field>
+  <mat-form-field appearance="outline">
+      <mat-label>Account#</mat-label>
+      <input matInput required formControlName="account" maxlength="4" value="">
+      <mat-error *ngIf="userForm.controls['account'].invalid && (isFormSubmitted || userForm.controls['account'].touched || userForm.controls['account'].dirty)"> This is required
+      </mat-error>
+  </mat-form-field>
+       
+  <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Owner</mat-label>
+      <input matInput formControlName="owner" value="">
+      <mat-error *ngIf="userForm.controls['owner'].invalid && (isFormSubmitted || userForm.controls['owner'].touched || userForm.controls['owner'].dirty)"> This is required
+      </mat-error>
     
-   
-    <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Owner</mat-label>
-        <input matInput 
-        formControlName="owner"
-        value="">
-        <div *ngIf="userForm.controls['owner'].invalid && (isFormSubmitted || userForm.controls['account'].touched || userForm.controls['account'].dirty)">
-            <mat-error *ngIf="userForm.controls['account'].errors?.['required']">This Is Required</mat-error>
-        </div>
-    </mat-form-field>
+  </mat-form-field>
 
-      <!-- <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Contact Name</mat-label>
-        <input matInput 
-        [formControl]="requiredFormControl" [errorStateMatcher]="matcher" 
-        value="">
-        @if (requiredFormControl.hasError('required')) {
-            <mat-error>Full Name is <strong>required</strong></mat-error>
-          }
-      </mat-form-field>
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Contact Name</mat-label>
+    <input matInput formControlName="name"value="">
+    <mat-error *ngIf="userForm.controls['name'].invalid && (isFormSubmitted || userForm.controls['name'].touched || userForm.controls['name'].dirty)"> This is required
+    </mat-error>
+  </mat-form-field>
       
    
-    <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Email</mat-label>
-      <input type="email" matInput 
-        [formControl]="requiredFormControl" [errorStateMatcher]="matcher"
-        placeholder="Ex. pat@example.com">
-      @if (requiredFormControl.hasError('email') && !requiredFormControl.hasError('required')) {
-        <mat-error>Please enter a valid email address</mat-error>
-      }
-      @if (requiredFormControl.hasError('required')) {
-        <mat-error>Email is <strong>required</strong></mat-error>
-      }
-    </mat-form-field>
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Email</mat-label>
+    <input type="email" matInput formControlName="email" value="">
+    <mat-error *ngIf="userForm.controls['email'].invalid && (isFormSubmitted || userForm.controls['email'].touched || userForm.controls['email'].dirty)"> Valid email is required
+    </mat-error>
+  </mat-form-field>
 
-    <mat-form-field appearance="outline" class="example-full-width">
-        <mat-label>Address</mat-label>
-        <textarea matInput  
-        [formControl]="requiredFormControl" [errorStateMatcher]="matcher"
-        placeholder="Ex. 100 Main St">
-        </textarea>
-        @if (requiredFormControl.hasError('required')) {
-            <mat-error>Address is <strong>required</strong></mat-error>
-          }
-      </mat-form-field>
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Phone:</mat-label>
+    <input matInput type="tel" maxlength="14" formControlName="phone" value="">
+    <mat-error *ngIf="userForm.controls['phone'].invalid && (isFormSubmitted || userForm.controls['phone'].touched || userForm.controls['phone'].dirty)"> This is required
+    </mat-error>
+  </mat-form-field>
 
-      <mat-form-field appearance="outline" class="example-full-width">
-        <mat-label>City</mat-label> 
-        <input matInput 
-        [formControl]="requiredFormControl" [errorStateMatcher]="matcher"
-        placeholder="Ex. San Francisco">
-        @if (requiredFormControl.hasError('required')) {
-            <mat-error>City is <strong>required</strong></mat-error>
-          }
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="">
-        <mat-label>State</mat-label>
-        <input matInput  
-        [formControl]="requiredFormControl" [errorStateMatcher]="matcher"
-        placeholder="Ex. CA">
-        @if (requiredFormControl.hasError('required')) {
-            <mat-error>State is <strong>required</strong></mat-error>
-          }
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="ml-10">
-        <mat-label>Postal Code</mat-label>
-        <input matInput  maxlength="5" value="" 
-        [formControl]="requiredFormControl" [errorStateMatcher]="matcher"
-        placeholder="Ex. 99999">
-        @if (requiredFormControl.hasError('required')) {
-            <mat-error>Postal Code is <strong>required</strong></mat-error>
-          }
-      </mat-form-field> -->
-      <div class="flex justify-start space-x-5">
-        <button mat-flat-button color="primary" (click)="onSubmit()">Save</button>
-        <button mat-flat-button color="primary" (click)="onCancel()">Cancel</button>
-    </div> 
+  <mat-form-field appearance="outline" class="example-full-width">
+      <mat-label>Address</mat-label>
+      <textarea matInput formControlName="address" value=""></textarea>
+      <mat-error *ngIf="userForm.controls['address'].invalid && (isFormSubmitted || userForm.controls['address'].touched || userForm.controls['address'].dirty)"> This is required
+      </mat-error>
+  </mat-form-field>
 
+  <mat-form-field appearance="outline" class="example-full-width">
+    <mat-label>City</mat-label> 
+    <input matInput formControlName="city" value="">
+    <mat-error *ngIf="userForm.controls['city'].invalid && (isFormSubmitted || userForm.controls['city'].touched || userForm.controls['city'].dirty)"> This is required
+    </mat-error>
+  
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="">
+    <mat-label>State</mat-label>
+    <input matInput formControlName="state" maxlength="2">
+    <mat-error *ngIf="userForm.controls['state'].invalid && (isFormSubmitted || userForm.controls['state'].touched || userForm.controls['state'].dirty)"> This is required
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="ml-10">
+    <mat-label>Postal Code</mat-label>
+    <input matInput  maxlength="5" value="" formControlName="postal">
+    <mat-error *ngIf="userForm.controls['postal'].invalid && (isFormSubmitted || userForm.controls['postal'].touched || userForm.controls['postal'].dirty)"> This is required
+    </mat-error>
+    
+  </mat-form-field>
+  <div class="flex justify-start space-x-5">
+    <button mat-flat-button type="submit" routerLink="userForm.valid ? '/home' : null" color="primary" (click)="onSubmit()">Save</button>
+    <button mat-flat-button  type="reset" routerLink="/home" color="primary">Cancel</button>
+  </div> 
 </form>
