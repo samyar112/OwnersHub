@@ -1,5 +1,5 @@
 const { ipcMain } = require('electron');
-const { app, BrowserWindow } = require('electron/main');
+const { app, BrowserWindow } = require('electron');
 const path = require('node:path');
 const sqlite3 = require('sqlite3').verbose();
 
@@ -9,7 +9,7 @@ process.on('uncaughtException', (error) => {
 })
 
 // Sqlite3 connection
-const db = new sqlite3.Database(path.join(__dirname, 'test.db'), (err) => {
+const db = new sqlite3.Database(path.join(__dirname, 'sqlite3-data.db'), (err) => {
   if (err) {
     console.error('Database connection failed:', err);
   } else {
