@@ -10,5 +10,6 @@ export const routes: Routes = [
     {'path': '', component:HomeComponent},
     {'path': 'login', component:LoginComponent},
     {'path': 'home', component:HomeComponent},
-    {'path': 'new-owner', component:DetailsComponent}
+    {'path': 'new-owner', component:DetailsComponent},
+    {'path': 'new-owner/:id', component: DetailsComponent }
 ];

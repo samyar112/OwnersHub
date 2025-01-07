@@ -56,21 +56,18 @@ export class DashboardComponent implements AfterViewInit, OnInit {
       console.error('Error loading owners:', error); // Handle any error fetching data
     });
   }
-
-   // Handle the edit event emitted from the MenuComponent
-   onEdit(ownerData: Owner) {
-    this.router.navigate(['/new-owner'], {
-      state: { ownerData: JSON.stringify(ownerData),isEditMode: true }
-    });
-  }
-
-  // Handle the view event emitted from the MenuComponent
+ // View action from Menu component
   onView(ownerData: Owner) {
-    this.sqliteService.getDataById(ownerData.id);
-    this.router.navigate(['/new-owner'], {
-      state: { ownerData: JSON.stringify(ownerData), isEditMode: false }
-    });
+    this.router.navigate(['/new-owner', ownerData.id], { 
+      queryParams: { mode: 'view' } });
   }
+
+  // Edit action from Menu component
+  onEdit(ownerData: Owner) {
+    this.router.navigate(['/new-owner', ownerData.id], { 
+      queryParams: { mode: 'edit' } });
+  }
+   
 
   // Handle delete functionality (if applicable)
   onDelete(id: number) {
@@ -88,8 +85,4 @@ export class DashboardComponent implements AfterViewInit, OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  // Add a new owner to the table (this is called when newOwner query param is passed)
-  addOwnerToTable(ownerData: Owner) {
-    this.dataSource.data = [...this.dataSource.data, ownerData]; // Add new owner to the table data
-  }
 }
