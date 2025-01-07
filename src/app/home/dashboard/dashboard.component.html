@@ -5,7 +5,7 @@
       <mat-form-field appearance="outline">
           <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
       </mat-form-field>
-      <button mat-flat-button [routerLink]="['/new-owner/']" [queryParams]="{mode: 'new'}" color="primary">Add New Owner</button>
+      <button mat-flat-button [routerLink]="['/new-owner']" color="primary">Add New Owner</button>
     </div>
       
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">

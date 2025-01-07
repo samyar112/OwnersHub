@@ -80,7 +80,31 @@
     
   </mat-form-field>
   <div class="flex justify-start space-x-5">
-    <button mat-button type="submit" [disabled]="userForm.invalid" (click)="onSubmit()">{{ isEditMode ? 'Update' : 'Add' }} Owner</button>
+    <!-- Edit Button (View Mode) -->
+    <button *ngIf="isViewMode" 
+    mat-flat-button 
+    color="primary" 
+    (click)="changeViewtoEdit()">
+    Edit Owner
+    </button>
+
+    <!-- Update Button (Edit Mode) -->
+    <button *ngIf="isEditMode" 
+    mat-flat-button 
+    type="submit" 
+    color="primary" 
+    (click)="onSubmit()">
+    Update Owner
+    </button>
+
+    <!-- Add Owner Button (when creating new owner) -->
+    <button *ngIf="!isEditMode && !isViewMode" 
+    mat-flat-button 
+    type="submit" 
+    color="primary" 
+    (click)="onSubmit()">
+    Add Owner
+    </button>
     <button mat-flat-button  type="reset" routerLink="/home" color="primary">Cancel</button>
   </div> 
 </form>

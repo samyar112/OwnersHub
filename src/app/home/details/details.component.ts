@@ -19,9 +19,11 @@ import { Owner } from '../../model/owner';  // Import the Owner model
 export class DetailsComponent implements OnInit {
   userForm: FormGroup;
   isFormSubmitted: boolean = false;
-  isEditMode: boolean = false;  // Flag to track if we are in edit mode
+  isEditMode: boolean = false; 
+  isViewMode: boolean = false; // Flag to track if we are in edit mode
   ownerId: number | null = null;
-  mode: string = 'view';  // Default mode is view
+  mode: string | undefined; 
+
 
   constructor(
     private sqliteService: SqliteService, 
@@ -56,35 +58,52 @@ export class DetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Accessing the dynamic 'id' parameter from the route
     this.ownerId = +this.route.snapshot.paramMap.get('id')!;
-    
     // Accessing the 'mode' query parameter to check if it's 'edit' or 'view'
     this.mode = this.route.snapshot.queryParamMap.get('mode')!;
     this.isEditMode = this.mode === 'edit';
-
-    // Fetch the data based on the ownerId
+    this.isViewMode = this.mode === 'view';
+    this.fetchData();
+  }
+  
+  // Initialize mode, ownerId and fetch data based on ownerId
+  fetchData(): void {
+    // If ownerId exists, fetch the owner data
     if (this.ownerId) {
       this.sqliteService.getDataById(this.ownerId).then((ownerData: Owner) => {
-        // Populate the form with owner data based on 'ownerId'
+        // Populate the form for either 'edit' or 'view' mode
         if (this.isEditMode) {
-          this.populateForm(ownerData);  // Populate the form for editing
+          this.populateForm(ownerData);  // Populate form for editing
         } else {
-          this.viewOwnerData(ownerData); // Populate the form for viewing
+          this.viewOwnerData(ownerData); // Populate form for viewing
         }
       }).catch((error: any) => {
         console.error('Error fetching owner data:', error);
       });
     }
   }
+  
 
   // Function to make form fields readonly in "view" mode
   viewOwnerData(ownerData: Owner) {
     this.populateForm(ownerData);
 
     // Disable all form fields when in view mode
+    if (this.isViewMode) {
+      Object.keys(this.userForm.controls).forEach(key => {
+        this.userForm.get(key)?.disable(); // Disable the controls to make them readonly
+      });
+    }
+  }
+
+  changeViewtoEdit() {
+    // Switch to edit mode
+    this.isEditMode = true;
+    this.isViewMode = false;
+  
+    // Enable all form fields when switching to "edit" mode
     Object.keys(this.userForm.controls).forEach(key => {
-      this.userForm.get(key)?.disable(); // Disable the controls to make them readonly
+      this.userForm.get(key)?.enable(); // Enable the controls to allow editing
     });
   }
 
