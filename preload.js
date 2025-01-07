@@ -15,7 +15,7 @@ contextBridge.exposeInMainWorld('electron', {
   deleteData: (id) => ipcRenderer.invoke('deleteData', id),
 
   // Get all data from the 'users' table
-  getAllData: () => ipcRenderer.invoke('get-all-data'),
+  getAllData: () => ipcRenderer.invoke('getAllData'),
 
   // Get a user by their ID
   getDataById: (id) => ipcRenderer.invoke('getDataById', id),
