@@ -21,12 +21,15 @@ import { Owner } from '../../model/owner';
   styleUrls: ['./dashboard.component.css']
 })
 
-export class DashboardComponent implements AfterViewInit, OnInit {
+export class DashboardComponent implements OnInit {
   
   displayedColumns: string[] = ['accountId', 'ownerName', 'contactName', 'email', 'phone', 'address', 'city', 'state', 'zip', 'star'];
   dataSource: MatTableDataSource<Owner> = new MatTableDataSource<Owner>();
   
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  pageSize = 10;
+  totalItems = 0;
+ 
   
   constructor(
     private sqliteService: SqliteService, 
@@ -35,10 +38,6 @@ export class DashboardComponent implements AfterViewInit, OnInit {
   ngOnInit(): void {
     this.createTable();
     this.loadOwners();
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
   }
 
   createTable() {
@@ -51,7 +50,9 @@ export class DashboardComponent implements AfterViewInit, OnInit {
 
   loadOwners() {
     this.sqliteService.getAllData().then((owners: Owner[]) => {
+      this.totalItems = owners.length
       this.dataSource.data = owners; // Set the data in the table
+      this.dataSource.paginator = this.paginator;
     }).catch((error: any) => {
       console.error('Error loading owners:', error); // Handle any error fetching data
     });
@@ -72,7 +73,7 @@ export class DashboardComponent implements AfterViewInit, OnInit {
   // Handle delete functionality (if applicable)
   onDelete(id: number) {
     this.sqliteService.deleteData(id).then(() => {
-      this.loadOwners();  // Reload the owners after deletion
+      this.loadOwners(); 
       alert('Owner data deleted successfully!');
     }).catch((error: any) => {
       console.error('Error deleting data:', error);

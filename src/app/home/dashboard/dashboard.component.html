@@ -92,8 +92,7 @@
       </tr>
     </table>
       <hr>
-      <mat-paginator class="mat-elevation-z8" [pageSizeOptions]="[5, 10]"
-      showFirstLastButtons
+      <mat-paginator class="mat-elevation-z8" [pageSizeOptions]="[5, 10]" [pageSize]="pageSize" [length]="totalItems"
       aria-label="Select page">
       </mat-paginator>
   </div>

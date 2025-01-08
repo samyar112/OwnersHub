@@ -9,6 +9,7 @@ process.on('uncaughtException', (error) => {
 });
 
 
+
 // Create window and load the app
 function createWindow() {
   const win = new BrowserWindow({
@@ -20,11 +21,13 @@ function createWindow() {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
-      nodeIntegration: true,
+      nodeIntegration: false,
     }
   });
 
   win.loadFile('dist/owners-hub/browser/index.html');
+  // // Open DevTools automatically
+  // win.webContents.openDevTools();
 }
 
 app.whenReady().then(() => {

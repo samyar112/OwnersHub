@@ -17,7 +17,7 @@
   <mat-form-field appearance="outline">
       <mat-label>Account#</mat-label>
       <input matInput required formControlName="account" maxlength="4" value="">
-      <mat-error *ngIf="userForm.controls['account'].invalid && (isFormSubmitted || userForm.controls['account'].touched || userForm.controls['account'].dirty)"> This is required
+      <mat-error *ngIf="userForm.controls['account'].invalid && (isFormSubmitted || userForm.controls['account'].touched || userForm.controls['account'].dirty)"> Required. Only Numbers allowed. 
       </mat-error>
   </mat-form-field>
        
@@ -47,7 +47,7 @@
   <mat-form-field appearance="outline" class="w-full">
     <mat-label>Phone:</mat-label>
     <input matInput type="tel" maxlength="14" formControlName="phone" value="">
-    <mat-error *ngIf="userForm.controls['phone'].invalid && (isFormSubmitted || userForm.controls['phone'].touched || userForm.controls['phone'].dirty)"> This is required
+    <mat-error *ngIf="userForm.controls['phone'].invalid && (isFormSubmitted || userForm.controls['phone'].touched || userForm.controls['phone'].dirty)"> Required. Only Numbers allowed. 
     </mat-error>
   </mat-form-field>
 
@@ -75,7 +75,7 @@
   <mat-form-field appearance="outline" class="ml-10">
     <mat-label>Postal Code</mat-label>
     <input matInput  maxlength="5" value="" formControlName="postal">
-    <mat-error *ngIf="userForm.controls['postal'].invalid && (isFormSubmitted || userForm.controls['postal'].touched || userForm.controls['postal'].dirty)"> This is required
+    <mat-error *ngIf="userForm.controls['postal'].invalid && (isFormSubmitted || userForm.controls['postal'].touched || userForm.controls['postal'].dirty)"> Required. Only Numbers allowed. 
     </mat-error>
     
   </mat-form-field>
