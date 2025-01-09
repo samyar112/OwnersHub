@@ -6,8 +6,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router'; 
 import { MatIcon } from '@angular/material/icon';
-import { SqliteService } from '../../sqlite.service';  // Import the service
-import { Owner } from '../../model/owner';  // Import the Owner model
+import { SqliteService } from '../../sqlite.service'; 
+import { Owner } from '../../model/owner';
 
 @Component({
   selector: 'app-details',
@@ -20,10 +20,10 @@ export class DetailsComponent implements OnInit {
   userForm: FormGroup;
   isFormSubmitted: boolean = false;
   isEditMode: boolean = false; 
-  isViewMode: boolean = false; // Flag to track if we are in edit mode
+  isViewMode: boolean = false;
   ownerId: number | null = null;
   mode: string | undefined; 
-
+  originalAccountId!: Number;
 
   constructor(
     private sqliteService: SqliteService, 
@@ -41,7 +41,7 @@ export class DetailsComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       phone: new FormControl('', [
         Validators.required,
-        Validators.pattern('^[0-9]+$'),
+        Validators.pattern('^[0-9]{10}$'),
         Validators.minLength(10)]),
       address: new FormControl('', [Validators.required]),
       city: new FormControl('', [Validators.required]),
@@ -54,7 +54,7 @@ export class DetailsComponent implements OnInit {
         Validators.minLength(5)]),
     });
   }
-
+  
   populateForm(ownerData: Owner) {
     this.userForm.setValue({
       account: ownerData.accountId,
@@ -78,85 +78,120 @@ export class DetailsComponent implements OnInit {
     this.fetchData();
   }
   
-  // Initialize mode, ownerId and fetch data based on ownerId
   fetchData(): void {
     // If ownerId exists, fetch the owner data
     if (this.ownerId) {
       this.sqliteService.getDataById(this.ownerId).then((ownerData: Owner) => {
+        this.originalAccountId = ownerData.accountId;
         // Populate the form for either 'edit' or 'view' mode
-        if (this.isEditMode) {
-          this.populateForm(ownerData);  // Populate form for editing
-        } else {
-          this.viewOwnerData(ownerData); // Populate form for viewing
-        }
+        this.isEditMode ? this.populateForm(ownerData) : this.viewOwnerData(ownerData);
       }).catch((error: any) => {
         console.error('Error fetching owner data:', error);
       });
     }
   }
   
-
   // Function to make form fields readonly in "view" mode
   viewOwnerData(ownerData: Owner) {
     this.populateForm(ownerData);
 
-    // Disable all form fields when in view mode
     if (this.isViewMode) {
       Object.keys(this.userForm.controls).forEach(key => {
-        this.userForm.get(key)?.disable(); // Disable the controls to make them readonly
+        this.userForm.get(key)?.disable();
       });
     }
   }
 
   changeViewtoEdit() {
     this.isEditMode = true;
+    this.isViewMode = false;
     Object.keys(this.userForm.controls).forEach(key => {
-      this.userForm.get(key)?.enable(); // Enable the controls to allow editing
+      this.userForm.get(key)?.enable();
     });
   }
 
-  onSubmit() {
+  private async checkAccountID(accountId: number) { 
+    try {
+      const existingOwner = await this.sqliteService.getAccountId(accountId);
+      return !!existingOwner;
+
+    } catch (error) {
+      console.error('Error checking account ID:', error);
+      alert('Error checking account ID. Please try again.');
+      return false;
+    }
+  }
+
+  isAccountChanged(newAccountId: number): boolean {
+    return this.originalAccountId !== newAccountId;
+  }
+
+  async onSubmit() {
     this.isFormSubmitted = true;
+  
     if (this.userForm.valid) {
-      const accountId = this.userForm.value.account;
+      const accountId = +this.userForm.value.account;
+
+      if (this.isEditMode && this.isAccountChanged(accountId)) {
+        const accountExists = await this.checkAccountID(accountId);
+  
+        if (accountExists) {
+          alert('Account ID already exists. Please choose a different account ID.');
+          return; 
+        }
+      }
+  
+      // Create the owner data object with the form values
       const ownerData: Owner = {
-        id: this.ownerId!,
+        id: this.ownerId,
         accountId: accountId,
         ownerName: this.userForm.value.owner,
         contactName: this.userForm.value.name,
         email: this.userForm.value.email,
-        phone: this.userForm.value.phone,
+        phone: +this.userForm.value.phone,  
         address: this.userForm.value.address,
         city: this.userForm.value.city,
         state: this.userForm.value.state,
-        zip: this.userForm.value.postal,
+        zip: +this.userForm.value.postal,  
       };
+  
       if (this.isEditMode) {
-        this.updateOwnerData(ownerData);  // Update the existing record
+        this.updateOwnerData(ownerData);  
       } else {
-        this.addOwnerData(ownerData);  // Add a new record
+        this.addOwnerData(ownerData);  
       }
+    } else {
+      console.log('Form is invalid:', this.userForm.errors); 
+    }
+  }
+  
+    // Add new owner to the database
+  private async addOwnerData(ownerData: Owner) {
+    try { 
+      const accountExists = await this.checkAccountID(ownerData.accountId);
+    
+      if (accountExists) {
+        alert('Account ID already exists. Please choose a different account ID.');
+        return;  
+      }
+      await this.sqliteService.addData(ownerData);  
+      this.router.navigate(['/home']); 
+      alert('Owner data added successfully!');
+    } catch (error) {
+      console.error('Error adding data:', error); 
+      alert('Error adding owner data. Please try again.');
     }
   }
 
-  // Add new owner to the database
-  addOwnerData(ownerData: Owner) {
-    this.sqliteService.addData(ownerData).then(() => {
-      this.router.navigate(['/home']);
-      alert('Owner data added successfully!');
-    }).catch((error: any) => {
-      console.error('Error adding data:', error); 
-      alert('Error adding owner data. Please try again.');
-    });
-  }
-
   // Update existing owner in the database
-  updateOwnerData(ownerData: Owner) {
-    this.sqliteService.editData(ownerData).then(() => {
-      this.router.navigate(['/home']);
+  private async updateOwnerData(ownerData: Owner) {
+    try {
+      await this.sqliteService.editData(ownerData);  
+      this.router.navigate(['/home']); 
       alert('Owner data updated successfully!');
-    }).catch((error: any) => {
+    } catch (error) {
       console.error('Error updating data:', error);
-    });
+      alert('Error updating owner data. Please try again.');
+    }
   }
 }

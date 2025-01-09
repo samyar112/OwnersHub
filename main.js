@@ -8,12 +8,10 @@ process.on('uncaughtException', (error) => {
   alert("Error Loading, Close the application", error)
 });
 
-
-
 // Create window and load the app
 function createWindow() {
   const win = new BrowserWindow({
-    width: 1250,
+    width: 1350,
     height: 900,
     resizable: true,
     minWidth: 800,
@@ -46,7 +44,6 @@ app.on('window-all-closed', () => {
   }
 });
 
-
 // Sqlite3 connection
 function getDb() {
   const db = new sqlite3.Database(path.join(__dirname, 'sqlite3-data.db'), (err) => {
@@ -67,11 +64,11 @@ ipcMain.handle('createTable', async () => {
       ownerName TEXT NOT NULL,               -- Required field
       contactName TEXT NOT NULL,             -- Required field
       email TEXT NOT NULL,                   -- Required field
-      phone TEXT NOT NULL,                   -- Required field
+      phone INTEGER NOT NULL,                   -- Required field
       address TEXT NOT NULL,                 -- Required field
       city TEXT NOT NULL,                    -- Required field
       state TEXT NOT NULL,                   -- Required field
-      zip TEXT NOT NULL                      -- Required field
+      zip INTEGER NOT NULL                      -- Required field
     );
   `;
   
@@ -83,7 +80,7 @@ ipcMain.handle('createTable', async () => {
         resolve('Table created successfully!');
       }
     });
-    db.close(); // Close the db connection after running the query
+    db.close();
   });
 });
 
@@ -97,15 +94,15 @@ ipcMain.handle('addData', async (event, data) => {
 
   return new Promise((resolve, reject) => {
     db.run(insertQuery, [
-      data.accountId,  // accountId
-      data.ownerName,   // owner_name
-      data.contactName, // contact_name
-      data.email,       // email
-      data.phone,       // phone
-      data.address,     // address
-      data.city,        // city
-      data.state,       // state
-      data.zip          // zip
+      data.accountId,  
+      data.ownerName,  
+      data.contactName, 
+      data.email,       
+      data.phone,      
+      data.address,     
+      data.city,        
+      data.state,       
+      data.zip         
     ], function (err) {
       if (err) {
         reject('Error adding data: ' + err.message);
@@ -113,7 +110,7 @@ ipcMain.handle('addData', async (event, data) => {
         resolve('Data added successfully with ID: ' + this.lastID);
       }
     });
-    db.close(); // Close the db connection after the operation
+    db.close();
   });
 });
 
@@ -145,7 +142,7 @@ ipcMain.handle('editData', async (event, data) => {
       } else {
         resolve('Data updated successfully');
       }
-      db.close(); // Close the db connection after the operation
+      db.close(); 
     });
   });
 });
@@ -162,7 +159,7 @@ ipcMain.handle('deleteData', async (event, id) => {
       } else {
         resolve('Data deleted successfully');
       }
-      db.close(); // Close the db connection after the operation
+      db.close(); 
     });
   });
 });
@@ -191,7 +188,7 @@ ipcMain.handle('getAllData', async () => {
         }));
         resolve(owners);  // Return the result rows mapped to Owner model
       }
-      db.close();  // Close the db connection after the operation
+      db.close(); 
     });
   });
 });
@@ -221,10 +218,26 @@ ipcMain.handle('getDataById', async (event, id) => {
             zip: row.zip
           });
         } else {
-          resolve(null); // Return null if no owner is found with the provided accountId
+          resolve(null);
         }
       }
-      db.close();  // Close the db connection after the operation
+      db.close(); 
+    });
+  });
+});
+
+ipcMain.handle('getAccountId', async (event, accountId) => {
+  const db = getDb();
+  return new Promise((resolve, reject) => {
+    const selectQuery = `SELECT * FROM owners WHERE accountId = ?`;
+    db.get(selectQuery, [accountId], (err, row) => {
+      if (err) {
+        console.error("Error querying the database:", err);
+        reject(err);  
+      } else {
+        resolve(row);
+      }
+      db.close(); 
     });
   });
 });

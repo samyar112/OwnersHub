@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit {
   
   displayedColumns: string[] = ['accountId', 'ownerName', 'contactName', 'email', 'phone', 'address', 'city', 'state', 'zip', 'star'];
   dataSource: MatTableDataSource<Owner> = new MatTableDataSource<Owner>();
+  isTableCreated: boolean = false;
   
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   pageSize = 10;
@@ -36,8 +37,7 @@ export class DashboardComponent implements OnInit {
     private router: Router) {}
   
   ngOnInit() {
-    this.createTable();
-    this.loadOwners();
+    this.isTableCreated ? this.loadOwners() : this.createTable();
   }
 
   async createTable() {

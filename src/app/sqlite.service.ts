@@ -38,4 +38,8 @@ export class SqliteService {
   getDataById(id: number) {
     return (window as any).electron.getDataById(id);
   }
+
+  getAccountId(accountId: number) {
+    return (window as any).electron.getAccountId(accountId);
+  } 
 }

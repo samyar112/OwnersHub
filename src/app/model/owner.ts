@@ -4,9 +4,9 @@ export interface Owner {
     ownerName?: string;
     contactName?: string;
     email?: string;
-    phone?: string;
+    phone?: number;
     address?: string;
     city?: string;
     state?: string;
-    zip?: string;
+    zip?: number;
 }
