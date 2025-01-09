@@ -23,7 +23,6 @@ export class DetailsComponent implements OnInit {
   isViewMode: boolean = false; // Flag to track if we are in edit mode
   ownerId: number | null = null;
   mode: string | undefined; 
-  existingAccountIds: Number[] = [];
 
 
   constructor(
@@ -34,28 +33,25 @@ export class DetailsComponent implements OnInit {
     this.userForm = new FormGroup({
       account: new FormControl('', [
         Validators.required,
-        Validators.pattern('^[0-9]+$')]),
+        Validators.pattern('^[0-9]+$'),
+        Validators.minLength(4),
+        Validators.maxLength(4)]),
       owner: new FormControl('', [Validators.required]),
       name: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       phone: new FormControl('', [
         Validators.required,
-        Validators.pattern('^[0-9]+$')]),
+        Validators.pattern('^[0-9]+$'),
+        Validators.minLength(10)]),
       address: new FormControl('', [Validators.required]),
       city: new FormControl('', [Validators.required]),
-      state: new FormControl('', [Validators.required]),
+      state: new FormControl('', [
+        Validators.required, 
+        Validators.minLength(2),]),
       postal: new FormControl('', [
         Validators.required,
-        Validators.pattern('^[0-9]+$')]),
-    });
-  }
-
-  checkDuplicateAccountId(accountId: number): Promise<boolean> {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const isDuplicate = this.existingAccountIds.includes(accountId);
-        resolve(isDuplicate); // Resolve the promise with true/false
-      }, 500); // Simulating a delay of 500ms (you can adjust this)
+        Validators.pattern('^[0-9]+$'),
+        Validators.minLength(5)]),
     });
   }
 
@@ -80,7 +76,6 @@ export class DetailsComponent implements OnInit {
     this.isEditMode = this.mode === 'edit';
     this.isViewMode = this.mode === 'view';
     this.fetchData();
-    this.loadOwners();
   }
   
   // Initialize mode, ownerId and fetch data based on ownerId
@@ -114,11 +109,7 @@ export class DetailsComponent implements OnInit {
   }
 
   changeViewtoEdit() {
-    // Switch to edit mode
     this.isEditMode = true;
-    this.isViewMode = false;
-  
-    // Enable all form fields when switching to "edit" mode
     Object.keys(this.userForm.controls).forEach(key => {
       this.userForm.get(key)?.enable(); // Enable the controls to allow editing
     });
@@ -128,12 +119,6 @@ export class DetailsComponent implements OnInit {
     this.isFormSubmitted = true;
     if (this.userForm.valid) {
       const accountId = this.userForm.value.account;
-      this.checkDuplicateAccountId(accountId).then(isDuplicate => {
-        if (isDuplicate) {
-          alert('Account ID already exists. Please choose a different one.')
-          return;
-        }
-      })
       const ownerData: Owner = {
         id: this.ownerId!,
         accountId: accountId,
@@ -174,13 +159,4 @@ export class DetailsComponent implements OnInit {
       console.error('Error updating data:', error);
     });
   }
-  
-  loadOwners() {
-    this.sqliteService.getAllData().then((owner: Owner) => {
-     this.existingAccountIds = [owner.accountId]
-    }).catch((error: any) => {
-      console.error('Error loading owners:', error); // Handle any error fetching data
-    });
-  }
-  
 }

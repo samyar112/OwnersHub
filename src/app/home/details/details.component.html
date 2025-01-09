@@ -11,27 +11,24 @@
   <h3 style="font-size: x-large;"> New Owner Profile</h3>
 </div>
 
-
-<form [formGroup]="userForm" class="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-lg">
-    <!-- Account Number  -->
-  <mat-form-field appearance="outline">
+<form [formGroup]="userForm" class=" max-w-lg p-6 mx-auto bg-white shadow-lg rounded-lg">
+  <mat-form-field appearance="outline" class="w-1/2 mb-4">
       <mat-label>Account#</mat-label>
-      <input matInput required formControlName="account" maxlength="4" value="">
-      <mat-error *ngIf="userForm.controls['account'].invalid && (isFormSubmitted || userForm.controls['account'].touched || userForm.controls['account'].dirty)"> Required. Only Numbers allowed. 
+      <input matInput required formControlName="account">
+      <mat-error *ngIf="userForm.controls['account'].invalid && (isFormSubmitted || userForm.controls['account'].touched || userForm.controls['account'].dirty)"> Required, must be 4 digits, and contain only numbers.
       </mat-error>
   </mat-form-field>
        
-  <mat-form-field appearance="outline" class="w-full">
+  <mat-form-field appearance="outline" class="w-full mb-4">
       <mat-label>Owner</mat-label>
-      <input matInput formControlName="owner" value="">
+      <input matInput formControlName="owner">
       <mat-error *ngIf="userForm.controls['owner'].invalid && (isFormSubmitted || userForm.controls['owner'].touched || userForm.controls['owner'].dirty)"> This is required
       </mat-error>
-    
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="w-full">
     <mat-label>Contact Name</mat-label>
-    <input matInput formControlName="name"value="">
+    <input matInput formControlName="name">
     <mat-error *ngIf="userForm.controls['name'].invalid && (isFormSubmitted || userForm.controls['name'].touched || userForm.controls['name'].dirty)"> This is required
     </mat-error>
   </mat-form-field>
@@ -39,42 +36,42 @@
    
   <mat-form-field appearance="outline" class="w-full">
     <mat-label>Email</mat-label>
-    <input type="email" matInput formControlName="email" value="">
+    <input type="email" matInput formControlName="email">
     <mat-error *ngIf="userForm.controls['email'].invalid && (isFormSubmitted || userForm.controls['email'].touched || userForm.controls['email'].dirty)"> Valid email is required
     </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="w-full">
     <mat-label>Phone:</mat-label>
-    <input matInput type="tel" maxlength="14" formControlName="phone" value="">
-    <mat-error *ngIf="userForm.controls['phone'].invalid && (isFormSubmitted || userForm.controls['phone'].touched || userForm.controls['phone'].dirty)"> Required. Only Numbers allowed. 
+    <input matInput type="tel" maxlength="10" formControlName="phone">
+    <mat-error *ngIf="userForm.controls['phone'].invalid && (isFormSubmitted || userForm.controls['phone'].touched || userForm.controls['phone'].dirty)"> Required, must be 10-14 digits, and contain only numbers.
     </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="example-full-width">
       <mat-label>Address</mat-label>
-      <textarea matInput formControlName="address" value=""></textarea>
+      <textarea matInput formControlName="address"></textarea>
       <mat-error *ngIf="userForm.controls['address'].invalid && (isFormSubmitted || userForm.controls['address'].touched || userForm.controls['address'].dirty)"> This is required
       </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="example-full-width">
     <mat-label>City</mat-label> 
-    <input matInput formControlName="city" value="">
+    <input matInput formControlName="city">
     <mat-error *ngIf="userForm.controls['city'].invalid && (isFormSubmitted || userForm.controls['city'].touched || userForm.controls['city'].dirty)"> This is required
     </mat-error>
   
   </mat-form-field>
   <mat-form-field appearance="outline" class="">
     <mat-label>State</mat-label>
-    <input matInput formControlName="state" maxlength="2">
+    <input matInput type="text" maxlength="2" formControlName="state">
     <mat-error *ngIf="userForm.controls['state'].invalid && (isFormSubmitted || userForm.controls['state'].touched || userForm.controls['state'].dirty)"> This is required
     </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="ml-10">
     <mat-label>Postal Code</mat-label>
-    <input matInput  maxlength="5" value="" formControlName="postal">
+    <input matInput maxlength="5" formControlName="postal">
     <mat-error *ngIf="userForm.controls['postal'].invalid && (isFormSubmitted || userForm.controls['postal'].touched || userForm.controls['postal'].dirty)"> Required. Only Numbers allowed. 
     </mat-error>
     
