@@ -1,6 +1,14 @@
 # OwnersHub
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.12.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.12. 
+Dependencies: 
+NodeJs: v22.13.0
+Angular Material: 18.2.14
+Material Design Icons: 3.0.1
+Electron: 33.2.1
+Sqlite3: 5.1.7
+Tailwindcss: 3.4.17
+
 
 ## Development server
 
