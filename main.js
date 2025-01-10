@@ -11,7 +11,7 @@ process.on('uncaughtException', (error) => {
 // Create window and load the app
 function createWindow() {
   const win = new BrowserWindow({
-    width: 1350,
+    width: 1400,
     height: 900,
     resizable: true,
     minWidth: 800,
@@ -168,7 +168,7 @@ ipcMain.handle('deleteData', async (event, id) => {
 ipcMain.handle('getAllData', async () => {
   const db = getDb();
   return new Promise((resolve, reject) => {
-    const query = 'SELECT * FROM owners';
+    const query = 'SELECT * FROM owners ORDER BY accountID DESC';
     db.all(query, [], (err, rows) => {
       if (err) {
         reject('Error fetching owners: ' + err.message);

@@ -34,4 +34,8 @@ export class MenuComponent {
   onDelete() {
     this.deleteOwner.emit(this.ownerData.id);  // Pass the owner's id to the parent for deletion
   }
+
+  onViewFiles() {
+    
+  }
 }
