@@ -42,8 +42,8 @@ export class DashboardComponent implements OnInit {
 
   async createTable() {
     try {
-      await this.sqliteService.createTable();  // Wait until this resolves
-      this.loadOwners();  // Only call this after createTable has completed
+      await this.sqliteService.createTable(); 
+      this.loadOwners(); 
     } catch (error) {
       console.error('Error creating table', error);
     }
@@ -57,23 +57,20 @@ export class DashboardComponent implements OnInit {
       // Set the data in the table
       this.dataSource.paginator = this.paginator;
     } catch (error) {
-      console.error('Error loading owners:', error); // Handle any error fetching data
+      console.error('Error loading owners:', error);
     }
   }
- // View action from Menu component
+
   onView(ownerData: Owner) {
     this.router.navigate(['/new-owner', ownerData.id], { 
       queryParams: { mode: 'view' } });
   }
 
-  // Edit action from Menu component
   onEdit(ownerData: Owner) {
     this.router.navigate(['/new-owner', ownerData.id], { 
       queryParams: { mode: 'edit' } });
   }
    
-
-  // Handle delete functionality (if applicable)
   async onDelete(id: number) {
     try {
       await this.sqliteService.deleteData(id);
@@ -89,5 +86,4 @@ export class DashboardComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
 }

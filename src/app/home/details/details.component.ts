@@ -34,8 +34,7 @@ export class DetailsComponent implements OnInit {
       account: new FormControl('', [
         Validators.required,
         Validators.pattern('^[0-9]+$'),
-        Validators.minLength(4),
-        Validators.maxLength(4)]),
+        Validators.minLength(4)]),
       owner: new FormControl('', [Validators.required]),
       name: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -91,7 +90,6 @@ export class DetailsComponent implements OnInit {
     }
   }
   
-  // Function to make form fields readonly in "view" mode
   viewOwnerData(ownerData: Owner) {
     this.populateForm(ownerData);
 
