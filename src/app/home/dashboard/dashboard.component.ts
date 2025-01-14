@@ -37,17 +37,20 @@ export class DashboardComponent implements OnInit {
     private router: Router) {}
   
   ngOnInit() {
-    this.isTableCreated ? this.loadOwners() : this.createTable();
+    this.loadOwners();
+    //only activate when there's no table 
+    // this.isTableCreated ? this.loadOwners() : this.createTable();
   }
 
-  async createTable() {
-    try {
-      await this.sqliteService.createTable(); 
-      this.loadOwners(); 
-    } catch (error) {
-      console.error('Error creating table', error);
-    }
-  }
+  // only activate when theres no table. 
+  // async createTable() {
+  //   try {
+  //     await this.sqliteService.createTable(); 
+  //     this.loadOwners(); 
+  //   } catch (error) {
+  //     console.error('Error creating table', error);
+  //   }
+  // }
 
   async loadOwners() {
     try {

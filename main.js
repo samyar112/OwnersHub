@@ -12,7 +12,7 @@ process.on('uncaughtException', (error) => {
 function createWindow() {
   const win = new BrowserWindow({
     width: 1400,
-    height: 900,
+    height: 950,
     resizable: true,
     minWidth: 800,
     minHeight: 800,
@@ -24,8 +24,8 @@ function createWindow() {
   });
 
   win.loadFile('dist/owners-hub/browser/index.html');
-  // // Open DevTools automatically
-  // win.webContents.openDevTools();
+  // Open DevTools automatically
+  win.webContents.openDevTools();
 }
 
 app.whenReady().then(() => {
@@ -53,36 +53,36 @@ function getDb() {
   });
   return db;
 }
-
-// Handle creating the table
-ipcMain.handle('createTable', async () => {
-  const db = getDb();
-  const createTableQuery = `
-    CREATE TABLE IF NOT EXISTS owners (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,  -- Automatically increments starting from 1
-      accountId INTEGER NOT NULL,            -- Non-primary key field
-      ownerName TEXT NOT NULL,               -- Required field
-      contactName TEXT NOT NULL,             -- Required field
-      email TEXT NOT NULL,                   -- Required field
-      phone INTEGER NOT NULL,                   -- Required field
-      address TEXT NOT NULL,                 -- Required field
-      city TEXT NOT NULL,                    -- Required field
-      state TEXT NOT NULL,                   -- Required field
-      zip INTEGER NOT NULL                      -- Required field
-    );
-  `;
+// ONLY needed when there's no table. 
+// // Handle creating the table
+// ipcMain.handle('createTable', async () => {
+//   const db = getDb();
+//   const createTableQuery = `
+//     CREATE TABLE IF NOT EXISTS owners (
+//       id INTEGER PRIMARY KEY AUTOINCREMENT,  -- Automatically increments starting from 1
+//       accountId INTEGER NOT NULL,            -- Non-primary key field
+//       ownerName TEXT NOT NULL,               -- Required field
+//       contactName TEXT NOT NULL,             -- Required field
+//       email TEXT NOT NULL,                   -- Required field
+//       phone INTEGER NOT NULL,                   -- Required field
+//       address TEXT NOT NULL,                 -- Required field
+//       city TEXT NOT NULL,                    -- Required field
+//       state TEXT NOT NULL,                   -- Required field
+//       zip INTEGER NOT NULL                      -- Required field
+//     );
+//   `;
   
-  return new Promise((resolve, reject) => {
-    db.run(createTableQuery, (err) => {
-      if (err) {
-        reject('Error creating table: ' + err.message);
-      } else {
-        resolve('Table created successfully!');
-      }
-    });
-    db.close();
-  });
-});
+//   return new Promise((resolve, reject) => {
+//     db.run(createTableQuery, (err) => {
+//       if (err) {
+//         reject('Error creating table: ' + err.message);
+//       } else {
+//         resolve('Table created successfully!');
+//       }
+//     });
+//     db.close();
+//   });
+// });
 
 // Handle adding new data for owners
 ipcMain.handle('addData', async (event, data) => {

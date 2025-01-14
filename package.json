@@ -9,7 +9,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:OwnersHub": "node dist/owners-hub/server/server.mjs",
-    "electron": "ng build && electron ."
+    "electron-dev": "ng build --configuration development && electron .",
+    "electron-prod": "ng build && electron ."
   },
   "private": true,
   "dependencies": {
