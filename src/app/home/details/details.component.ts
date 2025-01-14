@@ -8,6 +8,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { SqliteService } from '../../sqlite.service'; 
 import { Owner } from '../../model/owner';
+import { MatSnackBar } from '@angular/material/snack-bar'
 
 @Component({
   selector: 'app-details',
@@ -29,6 +30,7 @@ export class DetailsComponent implements OnInit {
     private sqliteService: SqliteService, 
     private route: ActivatedRoute,
     private router: Router,
+    private snackBar: MatSnackBar
   ) {
     this.userForm = new FormGroup({
       account: new FormControl('', [
@@ -115,7 +117,9 @@ export class DetailsComponent implements OnInit {
 
     } catch (error) {
       console.error('Error checking account ID:', error);
-      alert('Error checking account ID. Please try again.');
+      this.snackBar.open('Error checking account ID. Please try again.', 'Close', {
+        duration: 3000
+      });
       return false;
     }
   }
@@ -134,7 +138,9 @@ export class DetailsComponent implements OnInit {
         const accountExists = await this.checkAccountID(accountId);
   
         if (accountExists) {
-          alert('Account ID already exists. Please choose a different account ID.');
+          this.snackBar.open('Account ID already exists. Please choose a different account ID.', 'Close', {
+            duration: 3000
+          });
           return; 
         }
       }
@@ -154,9 +160,9 @@ export class DetailsComponent implements OnInit {
       };
   
       if (this.isEditMode) {
-        this.updateOwnerData(ownerData);  
+        await this.updateOwnerData(ownerData);  
       } else {
-        this.addOwnerData(ownerData);  
+        await this.addOwnerData(ownerData);  
       }
     } else {
       console.log('Form is invalid:', this.userForm.errors); 
@@ -169,15 +175,21 @@ export class DetailsComponent implements OnInit {
       const accountExists = await this.checkAccountID(ownerData.accountId);
     
       if (accountExists) {
-        alert('Account ID already exists. Please choose a different account ID.');
+        this.snackBar.open('Account ID already exists. Please choose a different account ID.', 'Close', {
+          duration: 3000
+        });
         return;  
       }
       await this.sqliteService.addData(ownerData);  
-      this.router.navigate(['/home']); 
-      alert('Owner data added successfully!');
+      this.router.navigate(['/home']);
+      this.snackBar.open('Owner data added successfully!', 'Close', {
+        duration: 3000
+      });
     } catch (error) {
-      console.error('Error adding data:', error); 
-      alert('Error adding owner data. Please try again.');
+      console.error('Error adding data:', error);
+      this.snackBar.open('Error adding owner data. Please try again.', 'Close', {
+        duration: 3000
+      });
     }
   }
 
@@ -185,11 +197,15 @@ export class DetailsComponent implements OnInit {
   private async updateOwnerData(ownerData: Owner) {
     try {
       await this.sqliteService.editData(ownerData);  
-      this.router.navigate(['/home']); 
-      alert('Owner data updated successfully!');
+      this.router.navigate(['/home']);
+      this.snackBar.open('Owner data updated successfully!', 'Close', {
+        duration: 3000
+      });
     } catch (error) {
       console.error('Error updating data:', error);
-      alert('Error updating owner data. Please try again.');
+      this.snackBar.open('Error updating owner data. Please try again.', 'Close', {
+        duration: 3000
+      });
     }
   }
 }
